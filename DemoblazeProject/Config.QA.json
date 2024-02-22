@@ -1,0 +1,13 @@
+﻿{
+  "AppSettings": {
+    "Browser": "Chrome",
+    "DebugLevel": 5,
+    "DriverDirectory": null,
+    "IsHeadless": false,
+    "LogDebugMessages": true,
+    "UserName": "",
+    "Password": "",
+    "TestURL": "https://www.demoblaze.com/",
+    "DefaultWaitTime": 120
+  }
+}

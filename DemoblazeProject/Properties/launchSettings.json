@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "DemoblazeTests": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ENVIRONMENT": "QA"
+      },
+      "sqlDebugging": false,
+      "nativeDebugging": false,
+      "jsWebView2Debugging": false
+    }
+  }
+}
