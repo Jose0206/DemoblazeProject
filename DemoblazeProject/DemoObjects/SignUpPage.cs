@@ -6,6 +6,7 @@ using DemoblazeProject.Framework.CommonFunctions;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 
 namespace DemoblazeProject.DemoObjects
@@ -46,12 +47,23 @@ namespace DemoblazeProject.DemoObjects
             }
         }
 
-        public void SignUp(string userName, string password)
+        public bool SignUp(string userName, string password, string? textresult = null)
         {
-            UserName.SetTextValue(userName + Keys.Tab);
+            UserName.SendKeys(userName);
             Password.SendKeys(password);
             SignInButton.Click();
-            WebElementExtensions.WaitForSpinningWheel();
+            try
+            {
+                ExpectedConditions.AlertIsPresent();
+                IAlert alert = Driver.Instance.SwitchTo().Alert();
+                string text = alert.Text;
+                if (text.Contains(textresult))
+                {
+                    return true;
+                }
+            }
+            catch (Exception e) { }
+            return false;
         }
     }
 }

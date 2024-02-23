@@ -48,12 +48,23 @@ namespace DemoblazeProject.DemoObjects
             }
         }
 
-        public void SignIn(string userName, string password)
+        public bool SignIn(string userName, string password, string? textresult = null)
         {
-            UserName.SetTextValue(userName+Keys.Tab);
+            UserName.SendKeys(userName);
             Password.SendKeys(password);
             SignInButton.Click();
-            WebElementExtensions.WaitForSpinningWheel();
+            try
+            {
+                ExpectedConditions.AlertIsPresent();
+                IAlert alert = Driver.Instance.SwitchTo().Alert();
+                string text = alert.Text;
+                if (text.Contains(value: textresult))
+                {
+                    return true;
+                }
+            }
+            catch (Exception e) { }
+            return false;
         }
     }
 }

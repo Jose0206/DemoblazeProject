@@ -53,8 +53,7 @@ namespace DemoblazeProject.Tests
             var password = "secret" + shortguid;
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
-            SignUp.SignUp("", "");
-            Modal.validateAlertResult("Please fill out Username and Password.").Should().BeTrue();
+            SignUp.SignUp("", "", "Please fill out Username and Password.").Should().BeTrue();
         }
 
 
@@ -72,8 +71,7 @@ namespace DemoblazeProject.Tests
             var password = "secret" + shortguid;
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
-            SignUp.SignUp("", password);
-            Modal.validateAlertResult("Please fill out Username and Password.").Should().BeTrue();
+            SignUp.SignUp("", password, "Please fill out Username and Password.").Should().BeTrue();
         }
 
 
@@ -91,8 +89,7 @@ namespace DemoblazeProject.Tests
             var password = "secret" + shortguid;
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
-            SignUp.SignUp(username, "");
-            Modal.validateAlertResult("Please fill out Username and Password.").Should().BeTrue();
+            SignUp.SignUp(username, "", "Please fill out Username and Password.").Should().BeTrue();
         }
 
 

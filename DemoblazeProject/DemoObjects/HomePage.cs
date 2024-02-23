@@ -60,8 +60,8 @@ namespace DemoblazeProject.DemoObjects
             {
                 if (tab.Text.Contains(option))
                 {
-                    tab.SafeJsClick();
                     WebElementExtensions.WaitForSpinningWheel();
+                    tab.SafeJsClick();
                     return true;
                 }
             }
@@ -70,6 +70,7 @@ namespace DemoblazeProject.DemoObjects
 
         public bool validateOptionDisplayed(string option)
         {
+            WebElementExtensions.WaitForSpinningWheel();
             var tabs = MainMenu.FindElements(By.TagName("a"));
             foreach (var tab in tabs)
             {
@@ -109,12 +110,13 @@ namespace DemoblazeProject.DemoObjects
 
         public bool validateProductsPagination()
         {
-            var items = productsTable.FindElements(By.TagName("a"));
+            var items = productsTable.FindElements(By.XPath("//a//img[contains(@class,'card-img-top img-fluid')]"));
 
             if (items.Count == 9)
             {
                 nextButton.SafeJsClick();
                 WebElementExtensions.WaitForSpinningWheel();
+                return true;
             }
             return false;
         }

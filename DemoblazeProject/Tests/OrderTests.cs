@@ -103,7 +103,6 @@ namespace DemoblazeProject.Tests
             var shortguid = randomguid.ToString().Substring(5, 7);
             var username = "Jose" + shortguid;
             var password = "secret" + shortguid;
-            var product = "Samsung galaxy s6";
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
             SignUp.SignUp(username, password);
