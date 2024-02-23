@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Text;
 using DemoblazeProject.CommonFunctions;
 using DemoblazeProject.Framework.CommonFunctions;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 
 
 namespace DemoblazeProject.DemoObjects

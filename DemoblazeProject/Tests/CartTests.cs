@@ -15,58 +15,61 @@ using DemoblazeProject.Framework.CommonFunctions;
 namespace DemoblazeProject.Tests
 {
     [TestClass]
-    public class ProductStoreTests : DemoblazeBaseClass
+    public class CartTests : DemoblazeBaseClass
     {
         [DeploymentItem("chromedriver.exe")]
-        [TestCategory("ProductStore Tests")]
+        [TestCategory("Cart Tests")]
         [TestMethod]
-        public void validateProductsAreDisplayed()
+        public void AddProduct()
         {
             var Home = new HomePage(DefaultWait);
             var SignUp = new SignUpPage(DefaultWait);
             var Login = new LoginPage(DefaultWait);
             var Product = new ProductPage(DefaultWait);
-            var Cart = new CartPage(DefaultWait);
-            var Order = new PlaceOrderPage(DefaultWait);
+            Product = new ProductPage(DefaultWait);
             var randomguid = Guid.NewGuid();
             var shortguid = randomguid.ToString().Substring(5, 7);
             var username = "Jose" + shortguid;
             var password = "secret" + shortguid;
+            var product = "Samsung galaxy s6";
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
-            Home.validateProductsDisplayed().Should().BeTrue();
-            Home.selectOption("Logout");
-            Home.validateOptionDisplayed("Log in");
+            Home.selectProduct(product);
+            Product.productNameLabel.Text.Should().Contain(product);
+            Product.addProductToCartAndValidateInfoInCart().Should().BeTrue();
+            
         }
 
 
-        [TestCategory("ProductStore Tests")]
+        [TestCategory("Cart Tests")]
         [TestMethod]
-        public void validateProductsPagination()
+        public void DeleteProduct()
         {
             var Home = new HomePage(DefaultWait);
             var SignUp = new SignUpPage(DefaultWait);
             var Login = new LoginPage(DefaultWait);
             var Product = new ProductPage(DefaultWait);
             var Cart = new CartPage(DefaultWait);
-            var Order = new PlaceOrderPage(DefaultWait);
+            Product = new ProductPage(DefaultWait);
             var randomguid = Guid.NewGuid();
             var shortguid = randomguid.ToString().Substring(5, 7);
             var username = "Jose" + shortguid;
             var password = "secret" + shortguid;
+            var product = "Samsung galaxy s6";
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
-            Home.validateProductsPagination().Should().BeTrue();
-            Home.selectOption("Logout");
-            Home.validateOptionDisplayed("Log in");
+            Home.selectProduct(product);
+            Product.productNameLabel.Text.Should().Contain(product);
+            Product.addProductToCartAndValidateInfoInCart().Should().BeTrue();
+            Cart.deleteProduct().Should().BeTrue();
         }
     }
 }

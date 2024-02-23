@@ -89,7 +89,7 @@ namespace DemoblazeProject.CommonFramework
             Driver.Instance.Manage().Window.Maximize();
         }
 
-        [TestCleanup]
+        //[TestCleanup]
         public void Cleanup()
         {
             try

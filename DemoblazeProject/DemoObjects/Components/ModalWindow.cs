@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using SeleniumExtras.WaitHelpers;
 
 namespace DemoblazeProject.DemoObjects.Components
 {
@@ -186,6 +187,22 @@ namespace DemoblazeProject.DemoObjects.Components
 
             } while (progress != "100%" || counter < 120);
 
+        }
+
+        public bool validateAlertResult(string textresult)
+        {
+            try
+            {
+                ExpectedConditions.AlertIsPresent();
+                IAlert alert = Driver.Instance.SwitchTo().Alert();
+                string text = alert.Text;
+                if (text.Contains(textresult))
+                {
+                    return true;
+                }
+            }
+            catch (Exception e) { }
+            return false;
         }
     }
 }

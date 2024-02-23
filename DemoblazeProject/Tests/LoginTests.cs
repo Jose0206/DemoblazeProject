@@ -11,23 +11,21 @@ using DemoblazeProject.CommonFramework;
 using DemoblazeProject.DemoObjects;
 using FluentAssertions;
 using DemoblazeProject.Framework.CommonFunctions;
+using DemoblazeProject.DemoObjects.Components;
 
 namespace DemoblazeProject.Tests
 {
     [TestClass]
-    public class ProductStoreTests : DemoblazeBaseClass
+    public class LoginTests : DemoblazeBaseClass
     {
         [DeploymentItem("chromedriver.exe")]
-        [TestCategory("ProductStore Tests")]
+        [TestCategory("Login Tests")]
         [TestMethod]
-        public void validateProductsAreDisplayed()
+        public void Create_User_and_Login()
         {
             var Home = new HomePage(DefaultWait);
             var SignUp = new SignUpPage(DefaultWait);
             var Login = new LoginPage(DefaultWait);
-            var Product = new ProductPage(DefaultWait);
-            var Cart = new CartPage(DefaultWait);
-            var Order = new PlaceOrderPage(DefaultWait);
             var randomguid = Guid.NewGuid();
             var shortguid = randomguid.ToString().Substring(5, 7);
             var username = "Jose" + shortguid;
@@ -38,22 +36,36 @@ namespace DemoblazeProject.Tests
             Home.selectOption("Log in");
             Login.SignIn(username, password);
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
-            Home.validateProductsDisplayed().Should().BeTrue();
-            Home.selectOption("Logout");
-            Home.validateOptionDisplayed("Log in");
         }
 
 
-        [TestCategory("ProductStore Tests")]
+        [TestCategory("Login Tests")]
         [TestMethod]
-        public void validateProductsPagination()
+        public void Login_with_wrongUserAndPassword()
         {
             var Home = new HomePage(DefaultWait);
             var SignUp = new SignUpPage(DefaultWait);
             var Login = new LoginPage(DefaultWait);
-            var Product = new ProductPage(DefaultWait);
-            var Cart = new CartPage(DefaultWait);
-            var Order = new PlaceOrderPage(DefaultWait);
+            var Modal = new ModalWindow(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "Jose" + shortguid;
+            var password = "secret" + shortguid;
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Log in");
+            Login.SignIn(username, password);
+            Modal.validateAlertResult("User does not exist.").Should().BeTrue();
+        }
+
+
+        [TestCategory("Login Tests")]
+        [TestMethod]
+        public void CreateUser_and_LoginUsingWrongPassword()
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var Modal = new ModalWindow(DefaultWait);
             var randomguid = Guid.NewGuid();
             var shortguid = randomguid.ToString().Substring(5, 7);
             var username = "Jose" + shortguid;
@@ -62,11 +74,8 @@ namespace DemoblazeProject.Tests
             Home.selectOption("Sign up");
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
-            Login.SignIn(username, password);
-            Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
-            Home.validateProductsPagination().Should().BeTrue();
-            Home.selectOption("Logout");
-            Home.validateOptionDisplayed("Log in");
+            Login.SignIn(username, "QA");
+            Modal.validateAlertResult("Wrong password.").Should().BeTrue();
         }
     }
 }

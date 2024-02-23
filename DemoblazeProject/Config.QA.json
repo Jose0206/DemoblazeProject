@@ -8,6 +8,6 @@
     "UserName": "",
     "Password": "",
     "TestURL": "https://www.demoblaze.com/",
-    "DefaultWaitTime": 120
+    "DefaultWaitTime": 10
   }
 }
