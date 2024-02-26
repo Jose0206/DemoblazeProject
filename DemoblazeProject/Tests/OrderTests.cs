@@ -39,6 +39,7 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
             Home.selectProduct(product);
             Product.productNameLabel.Text.Should().Contain(product);
@@ -76,6 +77,7 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
             Home.selectProduct(product);
             Product.productNameLabel.Text.Should().Contain(product);
@@ -108,6 +110,7 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
             Home.selectOption("Cart");
             Cart.placeOrderButton.SafeJsClick();

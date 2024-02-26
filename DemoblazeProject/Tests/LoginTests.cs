@@ -35,6 +35,7 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
         }
 
@@ -56,7 +57,6 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn("", password, "Please fill out Username and Password.").Should().BeTrue();
-            WebElementExtensions.WaitForSpinningWheel();
         }
 
 
@@ -77,7 +77,32 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, "", "Please fill out Username and Password.").Should().BeTrue();
-            WebElementExtensions.WaitForSpinningWheel();
+        }
+
+
+        [TestCategory("Login Tests")]
+        [TestMethod]//I was expecting to failed but the page doesn't have any validaton for the maximun of characteres
+        public void LoginUser_With_MoreThan50Characters() 
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var Modal = new ModalWindow(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "If you want to create robust, browser-based regression " +
+                           "automation suites and tests, scale and distribute scripts " +
+                           "across many environments, then you want to use Selenium WebDriver, " +
+                           "a collection of language specific bindings to drive a browser - the " +
+                           "way it is meant to be drive" + shortguid;
+            var password = "If you want to create robust, browser-based regression " +
+                           "automation suites and tests, scale and distribute scripts " +
+                           "across many environments, then you want to use Selenium WebDriver, " +
+                           "a collection of language specific bindings to drive a browser - the " +
+                           "way it is meant to be drive";
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Log in");
+            Login.SignIn(username, password, "User does not exist.").Should().BeFalse();
         }
     }
 }

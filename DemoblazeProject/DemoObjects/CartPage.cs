@@ -7,10 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
 
 namespace DemoblazeProject.DemoObjects
 {
-    internal class CartPage
+    public class CartPage
     {
         private int _defaultWait;
 
@@ -46,6 +47,15 @@ namespace DemoblazeProject.DemoObjects
             }
         }
 
+        public IWebElement orderTotalField
+        {
+            get
+            {
+                var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(_defaultWait));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("totalp")));
+            }
+        }
+
         public bool productIncart(string product)
         {
             WebElementExtensions.WaitForSpinningWheel();
@@ -60,15 +70,46 @@ namespace DemoblazeProject.DemoObjects
             return false;
         }
 
-        public bool deleteProduct()
+        public bool validateCartTotal()
         {
-            
-            deleteButton.SafeJsClick();
+            var columnTitles = Driver.Instance.FindElements(By.XPath("//tr//th"));
+            int i = 0;
+            foreach(var columnTitle in columnTitles)
+            {
+                if (columnTitle.Text.Contains("Price") == false)
+                {
+                    i++;
+                }
+            }
+            var prices = Driver.Instance.FindElements(By.XPath("//tr//td["+ i +"]"));
+            int total = 0;
+            int orderTotal = int.Parse(orderTotalField.Text);
+            foreach (var price in prices)
+            {
+                
+                var newValue = price.Text;
+                int value = int.Parse(newValue);
+                total += value;
+                if (total == orderTotal) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool deleteProduct(string product)
+        {
             WebElementExtensions.WaitForSpinningWheel();
             var items = cartProductTable.FindElements(By.TagName("td"));
-            if (items.Count == 0)
+            var productSelected = Driver.Instance.FindElement(By.XPath("//tr//td[contains(text(),'" + product + "')]/following-sibling::td//a"));
+            foreach (var item in items)
             {
-                return true;
+                if (item.Text.Contains(product))
+                {
+                    productSelected.SafeJsClick();
+                    validateCartTotal().Should().BeTrue();
+                    return true;
+                }
             }
             return false;
         }

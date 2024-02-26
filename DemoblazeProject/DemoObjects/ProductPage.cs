@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DemoblazeProject.Framework.CommonFunctions;
 using SeleniumExtras.WaitHelpers;
+using FluentAssertions;
 
 namespace DemoblazeProject.DemoObjects
 {
@@ -35,15 +36,6 @@ namespace DemoblazeProject.DemoObjects
             {
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(_defaultWait));
                 return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//h3[contains(@class,'price-container')]")));
-            }
-        }
-
-        public IWebElement productImage
-        {
-            get
-            {
-                var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(_defaultWait));
-                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//img[contains(@src,'imgs/galaxy_s6.jpg')]")));
             }
         }
 
@@ -87,9 +79,9 @@ namespace DemoblazeProject.DemoObjects
 
         public bool addProductToCartAndValidateInfoInCart()
         {
-            productImage.LocateElement();
             var productNameDetail = productNameLabel.Text;
             var productPriceDetail = productPriceLabel.Text.Split()[0];
+            productPriceDetail.Substring(1);
             AddToCartButton.SafeJsClick();
             homePage.selectOption("Cart");
             WebElementExtensions.WaitForSpinningWheel();
@@ -102,6 +94,7 @@ namespace DemoblazeProject.DemoObjects
                     {
                         if (productPriceDetail.Contains(item2.Text))
                         {
+                            cartPage.validateCartTotal().Should().BeTrue();
                             return true;
                         }
                     }
@@ -117,6 +110,14 @@ namespace DemoblazeProject.DemoObjects
             {
                 return new HomePage(_defaultWait);
             } 
+        }
+
+        public CartPage cartPage
+        {
+            get
+            {
+                return new CartPage(_defaultWait);
+            }
         }
     }
 }

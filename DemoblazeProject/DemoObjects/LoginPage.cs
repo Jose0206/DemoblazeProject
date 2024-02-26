@@ -48,18 +48,19 @@ namespace DemoblazeProject.DemoObjects
             }
         }
 
-        public bool SignIn(string userName, string password, string? textresult = null)
+        public bool SignIn(string userName, string password, string textresult = null)
         {
             UserName.SendKeys(userName);
+            //WebElementExtensions.WaitForSpinningWheel();
             Password.SendKeys(password);
-            SignInButton.Click();
+            WebElementExtensions.WaitForSpinningWheel();
+            SignInButton.SafeJsClick();
             try
             {
                 ExpectedConditions.AlertIsPresent();
-                IAlert alert = Driver.Instance.SwitchTo().Alert();
-                string text = alert.Text;
-                if (text.Contains(value: textresult))
+                if (Driver.Instance.SwitchTo().Alert().Text.Contains(textresult))
                 {
+                    WebElementExtensions.WaitForSpinningWheel();
                     return true;
                 }
             }

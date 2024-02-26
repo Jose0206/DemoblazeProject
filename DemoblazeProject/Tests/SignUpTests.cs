@@ -35,6 +35,7 @@ namespace DemoblazeProject.Tests
             SignUp.SignUp(username, password);
             Home.selectOption("Log in");
             Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
         }
 

@@ -60,8 +60,8 @@ namespace DemoblazeProject.DemoObjects
             {
                 if (tab.Text.Contains(option))
                 {
-                    WebElementExtensions.WaitForSpinningWheel();
                     tab.SafeJsClick();
+                    WebElementExtensions.WaitForSpinningWheel();
                     return true;
                 }
             }
@@ -70,7 +70,6 @@ namespace DemoblazeProject.DemoObjects
 
         public bool validateOptionDisplayed(string option)
         {
-            WebElementExtensions.WaitForSpinningWheel();
             var tabs = MainMenu.FindElements(By.TagName("a"));
             foreach (var tab in tabs)
             {
@@ -82,16 +81,18 @@ namespace DemoblazeProject.DemoObjects
             return false;
         }
 
-        public bool selectProduct(string product)
+        public bool selectProduct(string products)
         {
-            var  items = productsTable.FindElements(By.TagName("a"));
-            foreach (var item in items)
+            foreach (var product in products)
             {
-                if (item.Text.Contains(product))
+                var items = productsTable.FindElements(By.TagName("a"));
+                foreach (var item in items)
                 {
-                    item.SafeJsClick();
-                    WebElementExtensions.WaitForSpinningWheel();
-                    return true;
+                    if (item.Text.Contains(product))
+                    {
+                        item.SafeJsClick();
+                        return true;
+                    }
                 }
             }
             return false;
@@ -119,6 +120,32 @@ namespace DemoblazeProject.DemoObjects
                 return true;
             }
             return false;
+        }
+
+        public bool validateExistingCategories(List<string> categories)
+        {
+            foreach (var category in categories)
+            {
+                var existingCategories = Driver.Instance.FindElements(By.XPath("//a[contains(@id,'itemc')]"));
+                foreach (var item in existingCategories)
+                {
+                    if (item.Text.Contains(category))
+                    {
+                        item.SafeJsClick();
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
+        public CartPage cartPage
+        {
+            get
+            {
+                return new CartPage(_defaultWait);
+            }
         }
     }
 }
