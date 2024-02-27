@@ -8,16 +8,12 @@ It uses:
 * [Google Chrome](https://www.google.com/chrome/downloads/) as the local browser for testing
 * [NuGet](https://www.nuget.org/) for dependency management
 * [MSTest](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-mstest) as the core test framework
-* [Applitools Eyes](https://applitools.com/platform/eyes/) for visual testing
-* [Applitools Ultrafast Grid](https://applitools.com/platform/ultrafast-grid/) for cross-browser execution
-
 
 To run this project, you'll need:
 
-1. An [Applitools account](https://auth.applitools.com/users/register), which you can register for free.
-2. A good C# editor, such as [Microsoft Visual Studio](https://visualstudio.microsoft.com/).
-3. The [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) SDK (which may come bundled with Visual Studio).
-4. An up-to-date version of [Google Chrome](https://www.google.com/chrome/downloads/).
+1. A good C# editor, such as [Microsoft Visual Studio](https://visualstudio.microsoft.com/).
+2. The [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) SDK (which may come bundled with Visual Studio).
+3. An up-to-date version of [Google Chrome](https://www.google.com/chrome/downloads/).
 
 Tests Scenarios Automated:
 
