@@ -56,8 +56,9 @@ SignUp:
 
 1. Create User
 2. Create User with Leading Spaces
-3. Create User with Trailing Spaces
-4. Create User with Empty Password
-5. Create User with Empty UserName
-6. Create User with Empty Values
-7. Create User with More than 500 Characters
+3. Create User with No Valid Characters
+4. Create User with Trailing Spaces
+5. Create User with Empty Password
+6. Create User with Empty UserName
+7. Create User with Empty Values
+8. Create User with More than 500 Characters
