@@ -53,6 +53,25 @@ namespace DemoblazeProject.DemoObjects
             }
         }
 
+        public IWebElement CarouselElement
+        {
+            get
+            {
+                var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(_defaultWait));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[contains(@id,'carouselExampleIndicators') and contains(@class,'carousel slide')]")));
+            }
+        }
+
+
+        public IWebElement pageFoot
+        {
+            get
+            {
+                var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(_defaultWait));
+                return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//div[contains(@id,'footc')]")));
+            }
+        }
+
         public bool selectOption(string option)
         {
             var tabs = MainMenu.FindElements(By.TagName("a"));
@@ -122,18 +141,18 @@ namespace DemoblazeProject.DemoObjects
             return false;
         }
 
-        public bool validateExistingCategories(List<string> categories)
+        public bool validateExistingCategories(string category, bool navigateTo)
         {
-            foreach (var category in categories)
+        var existingCategories = Driver.Instance.FindElements(By.XPath("//a[contains(@id,'itemc')]"));
+            foreach (var item in existingCategories)
             {
-                var existingCategories = Driver.Instance.FindElements(By.XPath("//a[contains(@id,'itemc')]"));
-                foreach (var item in existingCategories)
+                if (item.Text.Contains(category) && navigateTo == true)
                 {
-                    if (item.Text.Contains(category))
-                    {
-                        item.SafeJsClick();
-                        return true;
-                    }
+                    item.SafeJsClick();
+                    return true;
+                }else if (item.Text.Contains(category) && navigateTo != true)
+                {
+                    return true;
                 }
             }
             return false;
