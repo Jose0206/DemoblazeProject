@@ -53,9 +53,9 @@ namespace DemoblazeProject.Tests
             var password = "secret" + shortguid;
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
-            SignUp.SignUp(" "+username, password);
+            SignUp.SignUp(username, password);
             Home.selectOption("Log in");
-            Login.SignIn(username, password);
+            Login.SignIn(" " + username, password);
             WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
         }
@@ -74,9 +74,9 @@ namespace DemoblazeProject.Tests
             var password = "secret" + shortguid;
             Home.productStoreLogo.Displayed.Should().BeTrue();
             Home.selectOption("Sign up");
-            SignUp.SignUp(username + " ", password);
+            SignUp.SignUp(username, password);
             Home.selectOption("Log in");
-            Login.SignIn(username, password);
+            Login.SignIn(username + " ", password);
             WebElementExtensions.WaitForSpinningWheel();
             Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
         }

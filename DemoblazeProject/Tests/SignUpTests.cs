@@ -41,6 +41,70 @@ namespace DemoblazeProject.Tests
 
 
         [TestCategory("SignUp Tests")]
+        [TestMethod]//I was expecting this test to failed: Special characters,
+                    //including the following are not acceptable: (){}[]|`¬¦!"£$%^&*"<>:;#~_-+=
+        public void Create_User_withNoValidCharacter()
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "Jose" + "(){}[]|`¬¦!£$%^&*<>:;#~_-+=,@";
+            var password = "secret" + "(){}[]|`¬¦!£$%^&*<>:;#~_-+=,@";
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Sign up");
+            SignUp.SignUp(username, password);
+            Home.selectOption("Log in");
+            Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.validateOptionDisplayed("Welcome " + username).Should().BeFalse();
+        }
+
+
+        [TestCategory("SignUp Tests")]
+        [TestMethod]//I was expecting this test to pass but the login page does not have trim function
+        public void Create_User_withLeadingSpaces()
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "Jose" + shortguid;
+            var password = "secret" + shortguid;
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Sign up");
+            SignUp.SignUp(" "+username, password);
+            Home.selectOption("Log in");
+            Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
+        }
+
+
+        [TestCategory("SignUp Tests")]
+        [TestMethod]//I was expecting this test to pass but the login page does not have trim function
+        public void Create_User_withTrailingSpaces()
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "Jose" + shortguid;
+            var password = "secret" + shortguid;
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Sign up");
+            SignUp.SignUp(username+" ", password);
+            Home.selectOption("Log in");
+            Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
+        }
+
+
+        [TestCategory("SignUp Tests")]
         [TestMethod]
         public void CreateUser_With_EmptyValues()
         {
