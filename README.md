@@ -14,6 +14,7 @@ To run this project, you'll need:
 1. A good C# editor, such as [Microsoft Visual Studio](https://visualstudio.microsoft.com/).
 2. The [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) SDK (which may come bundled with Visual Studio).
 3. An up-to-date version of [Google Chrome](https://www.google.com/chrome/downloads/).
+4. In the visual studio editor > Test explorer click on "RUN" icon.
 
 Tests Scenarios Automated:
 
