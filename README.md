@@ -19,9 +19,10 @@ Tests Scenarios Automated:
 
 Cart:
 
-1. Add Product To Cart
-2. Add Multiples Products to Cart and Validate Total
-3. Delete Product from Cart
+1. Add Multiples Product to Cart
+2. Add Product To Cart
+3. Add Multiples Products to Cart and Validate Total
+4. Delete Product from Cart
 
 Contact:
 
