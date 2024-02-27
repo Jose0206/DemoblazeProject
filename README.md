@@ -32,9 +32,10 @@ Login:
 1. Create User and Login
 2. Create User and Login with Leading Spaces
 3. Create User and Login with Trailing Spaces
-4. Create User and Login Using Empty Password
-5. Create User and Login Using Empty User
-6. Login User With More than 500 characters
+4. Create User and Login with No Valid Characters
+5. Create User and Login Using Empty Password
+6. Create User and Login Using Empty User
+7. Login User With More than 500 characters
 
 Order:
 
