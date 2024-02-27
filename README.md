@@ -23,6 +23,11 @@ Cart:
 2. Add Multiples Products to Cart and Validate Total
 3. Delete Product from Cart
 
+Contact:
+
+1. Send Contact Message
+2. Send Empty Message
+
 Login:
 
 1. Create User and Login
