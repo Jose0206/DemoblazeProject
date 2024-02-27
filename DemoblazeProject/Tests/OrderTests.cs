@@ -58,6 +58,51 @@ namespace DemoblazeProject.Tests
 
         [TestCategory("Order Tests")]
         [TestMethod]
+        public void Edit_and_PlaceOrder_E2ETest()
+        {
+            var Home = new HomePage(DefaultWait);
+            var SignUp = new SignUpPage(DefaultWait);
+            var Login = new LoginPage(DefaultWait);
+            var Product = new ProductPage(DefaultWait);
+            var Cart = new CartPage(DefaultWait);
+            var Order = new PlaceOrderPage(DefaultWait);
+            var randomguid = Guid.NewGuid();
+            var shortguid = randomguid.ToString().Substring(5, 7);
+            var username = "Jose" + shortguid;
+            var password = "secret" + shortguid;
+            var product = "Samsung galaxy s6";
+            Home.productStoreLogo.Displayed.Should().BeTrue();
+            Home.selectOption("Sign up");
+            SignUp.SignUp(username, password);
+            Home.selectOption("Log in");
+            Login.SignIn(username, password);
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.validateOptionDisplayed("Welcome " + username).Should().BeTrue();
+            Home.selectProduct(product);
+            Product.productNameLabel.Text.Should().Contain(product);
+            Product.addProductToCart("Product added.");
+            Home.selectOption("Cart");
+            Cart.productIncart(product).Should().BeTrue();
+            Cart.deleteProduct(product);
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.selectOption("Home");
+            WebElementExtensions.WaitForSpinningWheel();
+            Home.selectProduct("Nokia lumia 1520");
+            Product.addProductToCart("Product added.");
+            Home.selectOption("Cart");
+            Cart.productIncart("Nokia lumia 1520").Should().BeTrue();
+            Cart.placeOrderButton.SafeJsClick();
+            Order.placeOrderLabel.Displayed.Should().BeTrue();
+            Order.placeOrder("Jose", "USA", "Miami", "4242424242424242", "12", "24");
+            WebElementExtensions.WaitForSpinningWheel();
+            Order.confirmationModal.Displayed.Should().BeTrue();
+            Home.selectOption("Logout");
+            Home.validateOptionDisplayed("Log in");
+        }
+
+
+        [TestCategory("Order Tests")]
+        [TestMethod]
         public void PlaceOrder_withEmptyValues()
         {
             var Home = new HomePage(DefaultWait);
